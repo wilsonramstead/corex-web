@@ -52,10 +52,19 @@
     }
   </style>
   <script>
-    // Automatically close the browser and return to app after 2 seconds
+    // Redirect to deep link after a brief delay
+    // This will trigger the OS to close the browser and return to the app
     setTimeout(() => {
-      window.close();
-    }, 2000);
+      window.location.href = 'corex://stripe-return?status=cancel';
+    }, 1000);
+
+    // Fallback: If deep link doesn't work after 4 seconds, show manual close message
+    setTimeout(() => {
+      const instruction = document.querySelector('.close-instruction');
+      if (instruction) {
+        instruction.innerHTML = 'Please tap "Done" to return to the app';
+      }
+    }, 4000);
   </script>
 </head>
 <body>
