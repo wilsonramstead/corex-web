@@ -50,23 +50,40 @@
       border: 1px solid var(--glassBorder);
       max-width: 400px;
     }
-  </style>
-  <script>
-    // Redirect to app welcome screen after a brief delay
-    // This will trigger the OS to close the browser and return to the app
-    setTimeout(() => {
-      window.location.href = 'corex://welcome';
-    }, 1000);
 
-    // Fallback: If deep link doesn't work after 4 seconds, show manual close message
+    /* Optional: match success UX with a spinner */
+    .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 16px auto 0;
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top-color: var(--secondary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    // ✅ Do NOT deep link back into the app here.
+    // Deep linking (corex://welcome) can re-open the app in a half-loaded auth/context state.
+    // Instead, just close the browser window/tab to return to the app.
+    setTimeout(() => {
+      window.close();
+    }, 2000);
+
+    // Fallback copy if the OS/browser doesn't allow programmatic close
     setTimeout(() => {
       const instruction = document.querySelector('.close-instruction');
       if (instruction) {
-        instruction.innerHTML = 'Please tap "Done" to return to the app';
+        instruction.innerHTML = 'If this doesn’t close automatically, tap “Done” to return to the app.<div class="spinner"></div>';
       }
-    }, 4000);
+    }, 3500);
   </script>
 </head>
+
 <body>
   <div class="cancel-container">
     <!-- Cancel/close icon -->
@@ -81,8 +98,9 @@
     <p class="cancel-message">
       No worries! You can try again whenever you're ready. Returning to the app...
     </p>
+
     <div class="close-instruction">
-      This window will close automatically
+      <div class="spinner"></div>
     </div>
   </div>
 </body>
