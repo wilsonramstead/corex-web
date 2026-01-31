@@ -64,10 +64,10 @@
     }
   </style>
   <script>
-    // Redirect to deep link after a brief delay
+    // Redirect to app welcome screen after a brief delay
     // This will trigger the OS to close the browser and return to the app
     setTimeout(() => {
-      window.location.href = 'corex://stripe-return?status=success';
+      window.location.href = 'corex://welcome';
     }, 1000);
 
     // Fallback: If deep link doesn't work after 4 seconds, show manual close message
